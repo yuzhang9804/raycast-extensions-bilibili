@@ -1,12 +1,18 @@
 import { List } from "@raycast/api";
 import UploadImage from "./components/UploadImage";
-import Login from "./components/Login";
+import { useEffect, useState } from "react";
+import { getLoginStatus } from "./utils";
 
 const App = () => {
+  const [isLogin, setIsLogin] = useState(false)
+
+  useEffect(() => {
+    setIsLogin(getLoginStatus())
+  }, [])
+
   return (
     <List isShowingDetail>
-      <UploadImage />
-      <Login />
+      <UploadImage isLogin={isLogin} />
     </List>
   )
 };

@@ -1,2 +1,2 @@
 export * from './UploadImage'
-export * from './Login'
+export * from './LoginDetail'

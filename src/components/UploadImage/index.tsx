@@ -12,6 +12,7 @@ import {
   showToast,
   LocalStorage
 } from '@raycast/api'
+import LoginDetail from '../LoginDetail';
 
 const IMAGE_STORAGE = 'img-list'
 
@@ -26,8 +27,7 @@ interface UploadDetailProps {
   store: ImageItem[]
 }
 
-
-const UploadImage = () => {
+const UploadImage = ({ isLogin }) => {
   const [path, setPath] = useState<string>('')
   const [store, setStore] = useState<ImageItem[]>([])
 
@@ -57,10 +57,8 @@ const UploadImage = () => {
 
         await Clipboard.copy(data.image_url)
         showHUD('复制成功')
- 
         setStore(pre => [...pre, { path, url: data.image_url }])
       } else throw Error(message)
-
     } catch (e) {
       showToast({
         title: (e as Error).message || "上传失败",
@@ -113,7 +111,7 @@ const UploadImage = () => {
       title="图片上传"
       subtitle="获取粘贴板图片数据"
       icon={Icon.Upload}
-      detail={<UploadDetail path={path} store={store} />}
+      detail={ isLogin ? <UploadDetail path={path} store={store} /> : <LoginDetail />}
       actions={
         path && <ActionPanel title="操作">
           {
